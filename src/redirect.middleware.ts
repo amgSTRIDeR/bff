@@ -6,10 +6,13 @@ config();
 @Injectable()
 export class RedirectMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
-    if (req.originalUrl === '/product') {
+    console.log('req.originalUrl', req.originalUrl);
+    if (req.originalUrl.includes('//products')) {
       return res.redirect(process.env.PRODUCT_SERVICE_URL);
-    } else if (req.originalUrl === '/cart') {
+    } else if (req.originalUrl.includes('/cart')) {
       return res.redirect(process.env.CART_SERVICE_URL);
+    } else if (req.originalUrl.includes('/import')) {
+      return res.redirect(process.env.IMPORT_SERVICE_URL);
     } else {
       next();
     }
